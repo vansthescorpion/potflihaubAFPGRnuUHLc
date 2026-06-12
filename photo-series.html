@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow"><title>Self-Portrait Photography Series</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&family=VT323&display=swap" rel="stylesheet">
+  
+  <!-- GSAP Core + ScrollTrigger CDN Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    body { font-family: 'Lexend', sans-serif; background-color: #fffaf0; }
+    .pixel-text { font-family: 'VT323', monospace; }
+    .window-shadow { box-shadow: 4px 4px 0px 0px #000000; }
+    
+    .scroll-container-timeline {
+      position: relative;
+      height: 700vh; /* Smooth scrolling duration track window */
+    }
+    .sticky-viewport-track {
+      position: sticky;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      background-color: #050505;
+    }
+    .horizontal-gal-strip {
+      display: flex;
+      gap: 6rem;
+      padding-left: 45vw; /* Smooth padding entry anchor bounds */
+      padding-right: 50vw;
+      will-change: transform;
+      align-items: center;
+    }
+    /* Fixed shared height with completely dynamic multi-aspect width support rules */
+    .variable-polaroid-frame {
+      height: 500px;
+      background-color: #ffffff;
+      padding: 1rem;
+      border: 4px solid #000000;
+      box-shadow: 6px 6px 0px 0px rgba(255,255,255,0.08);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      will-change: transform;
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden">
+
+  <!-- Overview Context Panel -->
+  <div class="p-4 md:p-8 max-w-7xl mx-auto space-y-4">
+    <a href="index.html#brain-exploration-grid" class="inline-block bg-black text-white px-4 py-2 font-bold text-xs uppercase tracking-wider window-shadow hover:bg-gray-800">← Back to Projects</a>
+    
+    <div class="bg-white border-4 border-black p-6 window-shadow">
+      <span class="text-xs bg-green-100 text-green-800 border border-green-400 font-bold px-2 py-0.5 rounded-sm pixel-text">Project File #1 — Photography Series</span>
+      <h1 class="text-4xl font-bold uppercase tracking-tight mt-2">Self-Portrait Photography Series</h1>
+      <p class="text-xs font-bold text-gray-400 italic mt-1">Inspired by my painting in Project #2</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 pt-6 border-t-2 border-black text-xs text-gray-700 leading-relaxed">
+        <p>A series of staged self-portraits exploring ADHD, chronic illness, and the emotional weight of living with both. Each image focuses on a different feeling, symptom, or mental state, turning personal experience into visual symbols that are sometimes tense, sometimes quiet, and sometimes ironic. This series began as a way to translate inner experiences into images. It is built around moments that are difficult to explain in plain language: paralysis, overstimulation, fatigue, pain, dependence, repetition, and the constant push and pull between wanting to act and not being able to.</p>
+        <p>I used self-portrait images because the work is personal and direct. Rather than trying to make the series overly polished or overly literal, I let the images carry the feeling through pose, repetition, layering, symbolic objects, and atmosphere.</p>
+      </div>
+    </div>
+    <p class="text-xs font-bold font-mono text-center text-gray-500 pt-4 uppercase tracking-widest animate-pulse">Scroll down your trackpad or wheel to glide horizontally and focus cards smoothly ↓</p>
+  </div>
+
+  <!-- Interactive Core GSAP Viewport Track Wrapper -->
+  <div class="scroll-container-timeline">
+    <div class="sticky-viewport-track border-y-4 border-black">
+      <div id="horizontalGalStrip" class="horizontal-gal-strip"></div>
+    </div>
+  </div>
+
+  <div class="p-8 text-center bg-black text-white font-mono text-xs border-b-4 border-black">
+    <p>&gt; core execution stack completed: sequence terminal closed.</p>
+    <a href="index.html#brain-exploration-grid" class="mt-4 inline-block bg-white text-black px-4 py-2 font-bold uppercase tracking-wider text-[11px] window-shadow hover:bg-gray-200">Return to Projects</a>
+  </div>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Asset width definitions mapped dynamically to allow custom horizontal/vertical image frames without padding clips
+    const imageCollection = [
+      { file: "adhd paralysis", widthClass: "w-[340px]", title: "Scanography - ADHD Paralysis", hover: "Trapped in the body, yelling at it to move.", desc: "This image is about that strange gap where your mind is screaming 'stand up' or 'do it now,' but your body does not respond. From the outside it can look like laziness or calmness, when in reality it feels like being frozen. The image was made with a printer, which adds to the raw and imperfect feeling of the piece." },
+      { file: "albert camus", widthClass: "w-[340px]", title: "Albert Camus", hover: "A morning ritual with a darker thought behind it.", desc: "This image uses a cup of coffee and my reflection to point at the idea that every ordinary morning is also proof of survival. It connects to Camus and to the thought behind his famous quote, where even a cup of coffee can become a quiet sign of being here another day." },
+      { file: "easy dopamine", widthClass: "w-[340px]", title: "Easy Dopamine", hover: "A screen that pulls you in before you notice.", desc: "This image shows how easy dopamine can turn into compulsive behavior. The face pressed toward the screen and the visual pull around it reflect how difficult it can feel to stop, even when you know you are being drawn in." },
+      { file: "can't move", widthClass: "w-[440px]", title: "Can’t Move", hover: "The same stillness, shown in a different way.", desc: "This piece also deals with paralysis, but through a different visual setup. The overlapping images create a sense of being stuck inside the same state, unable to shift fully out of it." },
+      { file: "criativity", widthClass: "w-[440px]", title: "Scanography - Creativity", hover: "A self-portrait made through all the things I carry with me.", desc: "This is the positive image in the series. It shows multiple hobbies and interests through objects, and the camera visor makes it feel like a self-portrait from inside the act of creating. It was also made with a printer, which gives it a handmade quality that fits the piece." },
+      { file: "executive dysfunction", widthClass: "w-[440px]", title: "Executive Dysfunction", hover: "Too many plans, too little movement.", desc: "This piece shows the frustration of wanting to do many things but ending up doing almost none of them. It reflects poor planning, decision paralysis, task initiation problems, and the distance between intention and action. The overlap of images makes the feeling of fragmentation even stronger." },
+      { file: "hashimoto", widthClass: "w-[340px]", title: "Hashimoto", hover: "A body carrying what it cannot hide.", desc: "Hashimoto’s is an autoimmune disease that affects the thyroid. The throat area represents inflammation, and the butterflies refer to the thyroid’s butterfly shape, turning a medical condition into a visual symbol." },
+      { file: "hyperactive mind", widthClass: "w-[440px]", title: "Hyperactive Mind", hover: "Too much energy, even for myself.", desc: "Hyperactivity is not only physical; it is mental too. This image shows a moment where I feel like I am too much for myself, overwhelmed by internal movement, noise, and intensity." },
+      { file: "inner child", widthClass: "w-[340px]", title: "Inner Child", hover: "Seeing the child I was, and the one I still carry.", desc: "This image is about looking into the mirror and meeting my younger self. It carries care, grief, and tenderness at the same time, because it holds both the things I miss and the things that child had to go through. The serious expression makes it feel more reflective than nostalgic." },
+      { file: "insomnia", widthClass: "w-[460px]", title: "Insomnia", hover: "Night repeating itself over and over.", desc: "This piece uses several overlapping sleeping positions to show time passing without rest. The experimental editing reflects the strange, disorienting feeling of trying to sleep while the night keeps stretching on." },
+      { file: "medication", widthClass: "w-[340px]", title: "Scanography - Medication", hover: "Relief, dependence, and the fragility of living.", desc: "This image shows multiple medications and an open mouth, pointing to the reality of needing medicine to function and survive. It also carries the uncomfortable feeling of dependence, especially when some conditions require lifelong treatment." },
+      { file: "migraine", widthClass: "w-[340px]", title: "Migraine", hover: "Pain that disrupts everything.", desc: "This one is more direct. It speaks to migraines and tension headaches that have no clear cure, only medication that sometimes helps and sometimes does not. The image reflects how debilitating the pain can be." },
+      { file: "stuck", widthClass: "w-[340px]", title: "Scanography - Stuck", hover: "Chained by symptoms, limits, and repetition.", desc: "The chains represent being stuck and restrained, but also the many versions of being stuck in life: in paralysis, in chronic illness, in medication, and in not being able to do what I want to do. The fact that the chains form the word “stuck” makes the idea feel even more literal." }
+    ];
+
+    const strip = document.getElementById('horizontalGalStrip');
+
+    imageCollection.forEach((img, idx) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = `variable-polaroid-frame ${img.widthClass} target-focus-node-${idx}`;
+      wrapper.innerHTML = `
+        <div class="w-full flex-grow bg-gray-950 border border-black overflow-hidden relative group">
+          <img src="images/${img.file}.jpg" alt="${img.title}" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/95 p-4 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center text-xs space-y-1.5">
+            <span class="font-bold text-green-400 pixel-text uppercase tracking-widest">[ Meaning Matrix ]</span>
+            <p class="font-bold text-white text-[11px]">"${img.hover}"</p>
+            <p class="text-[10px] text-gray-300 leading-relaxed">${img.desc}</p>
+          </div>
+        </div>
+        <div class="text-center pt-2 mt-2 border-t border-dashed border-gray-300">
+          <span class="font-mono font-bold text-[11px] uppercase text-black block truncate">${img.title}</span>
+        </div>
+      `;
+      strip.appendChild(wrapper);
+    });
+
+    // Main structural scroll animation timeline driver
+    const scrollAnimation = gsap.to("#horizontalGalStrip", {
+      x: () => -(strip.scrollWidth - window.innerWidth),
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".scroll-container-timeline",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+        invalidateOnRefresh: true
+      }
+    });
+
+    // Central alignment zoom scaling trigger rules mapping individual items dynamically
+    imageCollection.forEach((_, idx) => {
+      gsap.fromTo(`.target-focus-node-${idx}`, 
+        { scale: 0.82, opacity: 0.4 },
+        {
+          scale: 1.08,
+          opacity: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".scroll-container-timeline",
+            containerAnimation: scrollAnimation,
+            start: "center+=100% center", 
+            end: "center-=100% center",
+            scrub: true,
+            horizontal: true
+          }
+        }
+      );
+    });
+  </script>
+</body>
+</html>

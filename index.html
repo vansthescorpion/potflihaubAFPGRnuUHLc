@@ -4,27 +4,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow"> 
-  <title>Kind by Design - Portfolio</title>
+  <meta name="robots" content="noindex, nofollow"> <title>Kind by Design — Portfolio Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=VT323&family=Shrikhand&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=VT323&family=Shrikhand&family=Playfair+Display:ital,wght@1,700&family=Rubik+Glitch&family=Barlow+Condensed:wght@900&family=Syne:wght@800&family=Space+Grotesk:wght@700&display=swap"
     rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <style>
-    @font-face {
-      font-family: 'Kindfield';
-      src: url('Kindfield-Regular.otf') format('opentype');
-    }
+  @font-face {
+    font-family: 'Kindfield';
+    src: url('Kindfield-Regular.otf') format('opentype');
+  }
 
     body {
       font-family: 'Lexend', sans-serif;
-      background-color: #FFF3FC; 
-      color: #000000; 
-      overflow: hidden; 
+      background-color: #FFF3FC; /* Brand Soft Base */
+      color: #000000; /* Restored to pure black text */
+      overflow-x: hidden;
     }
 
     .pixel-text {
@@ -42,7 +41,10 @@
 
     .zine-texture {
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       opacity: 0.04;
       pointer-events: none;
       z-index: 9999;
@@ -50,43 +52,33 @@
     }
 
     .window-shadow {
-      box-shadow: 4px 4px 0px 0px #000000;
+      box-shadow: 4px 4px 0px 0px #000000; /* Crisp pure black drop shadow */
     }
 
-    /* Typewriter animation effect */
-    .typewriter-text {
-      display: inline-block;
-      overflow: hidden;
-      border-right: 2px solid #000000;
-      white-space: nowrap;
-      width: 0;
-    }
-    
-    .start-typing {
-      animation: typing 2.5s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+    .window-shadow-heavy {
+      box-shadow: 8px 8px 0px 0px #000000; /* Heavy pure black drop shadow */
     }
 
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
+    .pin-axis-rotate {
+      transform-origin: 50% 16px;
+      touch-action: none;
+      user-select: none;
+      will-change: transform;
     }
 
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: #000000; }
+    .shattered {
+      opacity: 0.1;
+      transform: scale(0.5) translateY(50px) rotate(25deg);
+      pointer-events: none;
+      transition: all 0.4s ease;
     }
 
-    /* Dot Wave Keyframes */
-    .wave-dot {
-      display: inline-block;
-      animation: dotWave 1.2s infinite ease-in-out;
-    }
-    .wave-dot:nth-child(2) { animation-delay: 0.2s; }
-    .wave-dot:nth-child(3) { animation-delay: 0.4s; }
-
-    @keyframes dotWave {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+    /* Responsive unbinding of sticky behavior for small displays */
+    @media (min-width: 1024px) {
+      .desktop-sticky {
+        position: sticky;
+        top: 6rem;
+      }
     }
   </style>
 </head>
@@ -96,80 +88,616 @@
   <div class="zine-texture"></div>
   <canvas id="pixelCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-50"></canvas>
 
-  <header class="fixed inset-0 w-full h-screen bg-[#EFE1FC] z-50 flex flex-col justify-center items-center px-4 overflow-hidden">
-    <div class="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:30px_30px]"></div>
-    
-    <div class="z-10 text-center uppercase tracking-tight w-full max-w-4xl px-4 flex flex-col items-center justify-center">
-      <h2 id="introGreeting" class="text-3xl md:text-5xl font-bold pixel-text text-black mb-4 tracking-widest opacity-0">Hi, I am</h2>
-      
-      <div class="min-h-[200px] md:min-h-[300px] w-full flex items-center justify-center">
-        <h1 id="morphText"
-          class="text-6xl md:text-9xl font-bold bg-white px-10 py-6 border-4 border-black window-shadow text-[#DC326A] transition-all duration-200">
-          Vanessa
-        </h1>
-        
-        <div id="brandWordByWord"
-          class="hidden flex-row gap-3 md:gap-6 justify-center items-center bg-white px-10 py-6 border-4 border-black window-shadow text-5xl md:text-7xl lg:text-8xl tracking-tight brand-wordmark">
-          <span class="opacity-0 transform translate-y-4 transition-all duration-300 mx-1 text-[#DC326A]" id="w1">Kind</span>
-          <span class="opacity-0 transform translate-y-4 transition-all duration-300 mx-1 text-[#DC326A]" id="w2">by</span>
-          <span class="opacity-0 transform translate-y-4 transition-all duration-300 mx-1 text-[#DC326A]" id="w3">Design</span>
-        </div>
+  <header class="relative h-[400vh] w-full bg-[#EFE1FC] border-b-4 border-black">
+    <div class="sticky top-0 left-0 w-full h-screen flex flex-col justify-center items-center px-4 overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:30px_30px]">
       </div>
-      
-      <div id="statusRibbon" class="mt-12 bg-white border-2 border-black px-6 py-2.5 window-shadow opacity-0 transition-all duration-500 max-w-md">
-        <p class="text-xs font-bold uppercase tracking-wider text-black font-mono">
-          <span id="typeTarget" class="typewriter-text">The Portfolio will be accessible shortly.</span>
-        </p>
-        
-        <div id="waveWrapper" class="opacity-0 text-xl font-bold text-[#DC326A] mt-2 transition-opacity duration-300">
-          <span class="wave-dot">.</span>
-          <span class="wave-dot">.</span>
-          <span class="wave-dot">.</span>
+      <div
+        class="z-10 text-center uppercase tracking-tight w-full max-w-4xl px-4 flex flex-col items-center justify-center">
+        <h2 id="introGreeting" class="text-3xl md:text-5xl font-bold pixel-text text-black mb-4 tracking-widest">Hi, I am</h2>
+        <div class="min-h-[200px] md:min-h-[300px] w-full flex items-center justify-center">
+          <h1 id="morphText"
+            class="text-6xl md:text-9xl font-bold bg-white px-10 py-6 border-4 border-black window-shadow text-[#DC326A] transition-all duration-200">
+            Vanessa
+          </h1>
+          <div id="brandWordByWord"
+            class="hidden flex-row gap-3 md:gap-6 justify-center items-center bg-white px-10 py-6 border-4 border-black window-shadow text-5xl md:text-7xl lg:text-8xl tracking-tight brand-wordmark">
+            <span class="opacity-10 transform translate-y-4 transition-all duration-300 mx-1 text-[#DC326A]"
+              id="w1">Kind</span>
+            <span class="opacity-10 transform translate-y-4 transition-all duration-300 mx-1 text-[#DC326A]"
+              id="w2">by</span>
+            <span class="opacity-10 transform translate-y-4 transition-all duration-300 mx-1 text-[#DC326A]"
+              id="w3">Design</span>
+          </div>
         </div>
-        <p class="text-xs italic text-gray-600 mt-1">Thank you for your patience! <3 </p>
+        <p
+          class="mt-12 text-sm font-bold uppercase tracking-widest text-gray-700 pixel-text bg-white border border-black px-3 py-1">
+          Keep scrolling to enter workspace</p>
+        <div class="mt-2 text-2xl animate-bounce text-black">↓</div>
       </div>
     </div>
   </header>
 
+  <div
+    class="bg-black text-white py-4 overflow-hidden border-b-4 border-black whitespace-nowrap font-bold uppercase tracking-widest text-sm z-30 relative">
+    <div class="inline-block animate-[marquee_30s_linear_infinite] pixel-text">
+      kind by design * cognitive accessibility * inclusive interactive environments * building tools that help * kind by
+      design * cognitive accessibility * inclusive interactive environments * building tools that help *
+    </div>
+  </div>
+
+  <section class="bg-white border-b-4 border-black py-16 px-4 text-center relative overflow-hidden select-none">
+    <p class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4 pixel-text">[ System Intercept: Click on
+      any letter to destroy it ]</p>
+    <div class="flex flex-wrap justify-center items-center gap-2 max-w-6xl mx-auto uppercase font-black">
+      <span class="text-3xl md:text-5xl font-mono tracking-tight mr-4 text-gray-400">Welcome to my</span>
+      <div id="destructiblePortfolio" class="flex items-center justify-center gap-1.5 inline-flex">
+        <span onclick="shatter(this)"
+          class="cursor-pointer text-5xl md:text-8xl px-2 bg-[#EFE1FC] border-2 border-black window-shadow transition-all"
+          style="font-family: 'VT323', monospace;">P</span>
+        <span onclick="shatter(this)"
+          class="cursor-pointer text-5xl md:text-8xl px-2 bg-[#FFCFEE] text-[#DC326A] border-2 border-black window-shadow transition-all"
+          style="font-family: 'Playfair Display', serif; font-style: italic;">o</span>
+        <span onclick="shatter(this)"
+          class="cursor-pointer text-5xl md:text-8xl px-2 bg-black text-white border-2 border-white window-shadow transition-all"
+          style="font-family: 'Rubik Glitch', display;">r</span>
+        <span onclick="shatter(this)"
+          class="cursor-pointer text-5xl md:text-8xl px-2 bg-yellow-100 text-black border-2 border-black window-shadow transition-all"
+          style="font-family: 'Barlow Condensed', sans-serif;">t</span>
+        <span onclick="shatter(this)"
+          class="cursor-pointer text-5xl md:text-8xl px-2 bg-[#D3B0EA] border-2 border-black window-shadow transition-all"
+          style="font-family: 'Syne', sans-serif;">f</span>
+        <span onclick="shatter(this)"
+          class="cursor-pointer text-5xl md:text-8xl px-2 bg-white text-[#FD9BCF] border-2 border-black window-shadow transition-all"
+          style="font-family: 'VT323', monospace;">o</span>
+        <span onclick="shatter(this)"
+          class="cursor-pointer text-5xl md:text-8xl px-2 bg-gray-900 text-green-400 border-2 border-black window-shadow transition-all"
+          style="font-family: 'Space Grotesk', sans-serif;">l</span>
+        <span onclick="shatter(this)"
+          class="cursor-pointer text-5xl md:text-8xl px-2 bg-[#FFF3FC] text-[#A8003A] border-2 border-black window-shadow transition-all"
+          style="font-family: 'Playfair Display', serif;">i</span>
+        <span onclick="shatter(this)"
+          class="cursor-pointer text-5xl md:text-8xl px-2 bg-[#EFE1FC] border-2 border-black window-shadow transition-all"
+          style="font-family: 'Syne', sans-serif;">o</span>
+      </div>
+    </div>
+    <button onclick="resetPortfolio()"
+      class="mt-6 text-xs font-bold uppercase tracking-wider bg-black text-white px-3 py-1 window-shadow hover:bg-gray-800">Reset
+      Letters </button>
+  </section>
+
+  <!-- ==========================================================================
+     3. PROFILE & BIOGRAPHY MATRIX LAYOUT
+     ========================================================================== -->
+  <main class="relative min-h-screen bg-[#FFF3FC] p-4 md:p-8 space-y-24 pb-32">
+
+    <section class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 items-start relative min-h-none lg:min-h-[140vh]">
+
+      <!-- Polaroid Profile Component (Sticky on desktop, flows up normally on mobile) -->
+      <div class="w-full lg:w-[340px] flex-shrink-0 flex justify-center lg:sticky lg:top-24 mb-4 lg:mb-0">
+        <div id="profilePolaroid"
+          class="pin-axis-rotate w-full max-w-sm bg-white p-5 border-4 border-black window-shadow-heavy rounded-xs text-center select-none cursor-grab active:cursor-grabbing">
+          <div class="w-4 h-4 bg-[#A8003A] rounded-full mx-auto mb-4 border border-black shadow-inner"></div>
+          <div class="w-full aspect-[3/4] bg-gray-100 border-2 border-black overflow-hidden relative">
+            <img src="images/profile pic.png" alt="picture of me" class="w-full h-full object-cover">
+          </div>
+          <div class="mt-4 font-mono font-bold text-xs uppercase text-gray-400 tracking-widest">Move this!</div>
+        </div>
+      </div>
+
+      <!-- Draggable Independent Biography Text Windows (Programmatically Constrained) -->
+      <div class="w-full flex-grow flex flex-col gap-6 lg:block relative lg:min-h-[950px]" id="windowsWorkspace">
+
+        <!-- Window 1: About Me -->
+        <div
+          class="draggable-window relative lg:absolute lg:top-0 lg:left-0 w-full lg:max-w-2xl bg-white border-4 border-black window-shadow rounded-sm z-10">
+          <div
+            class="bg-black text-white px-3 py-1.5 flex items-center justify-between cursor-move select-none header-bar">
+            <span class="font-bold pixel-text text-xs flex items-center gap-2"> about_me.txt</span>
+          </div>
+          <div class="p-5">
+            <p class="text-sm leading-relaxed text-black font-medium">I am Vanessa, a multimedia designer/creator Focus on building digital and interactive experiences that help people. My main interest is in designing apps, games, and accessible digital tools that support people with ADHD, neurodivergence, and different cognitive needs, while still feeling thoughtful, human, and visually engaging.</p>
+          </div>
+        </div>
+
+        <!-- Window 2: What I Do -->
+        <div
+          class="draggable-window relative lg:absolute lg:top-[200px] lg:left-4 w-full lg:max-w-2xl bg-white border-4 border-black window-shadow rounded-sm z-10">
+          <div
+            class="bg-black text-white px-3 py-1.5 flex items-center justify-between cursor-move select-none header-bar">
+            <span class="font-bold pixel-text text-xs flex items-center gap-2"> what_i_do.txt</span>
+          </div>
+          <div class="p-5">
+            <p class="text-sm leading-relaxed text-black">I work across different mediums, but they all serve the same goal: creating experiences that are useful, inclusive, and emotionally aware. Whether I am working through UX, web, game development, visual storytelling, or research, I am always trying to understand how design can reduce frustration, support autonomy, and make people feel more understood.</p>
+          </div>
+        </div>
+
+        <!-- Window 3: My Focus -->
+        <div
+          class="draggable-window relative lg:absolute lg:top-[420px] lg:left-2 w-full lg:max-w-2xl bg-white border-4 border-black window-shadow rounded-sm z-10">
+          <div
+            class="bg-black text-white px-3 py-1.5 flex items-center justify-between cursor-move select-none header-bar">
+            <span class="font-bold pixel-text text-xs flex items-center gap-2"> my_focus.txt</span>
+          </div>
+          <div class="p-5">
+            <p class="text-sm leading-relaxed text-black">I am especially interested in cognitive accessibility, neurodiversity, inclusive design, and interactive experiences with social impact. I want to create digital products that are not only functional, but also more humane, more intuitive, and more respectful of the different ways people think, feel, and move through the world.</p>
+          </div>
+        </div>
+
+        <!-- Window 4: Why I Work This Way -->
+        <div
+          class="draggable-window relative lg:absolute lg:top-[640px] lg:left-6 w-full lg:max-w-2xl bg-white border-4 border-black window-shadow rounded-sm z-10">
+          <div
+            class="bg-black text-white px-3 py-1.5 flex items-center justify-between cursor-move select-none header-bar">
+            <span class="font-bold pixel-text text-xs flex items-center gap-2"> philosophy.txt</span>
+          </div>
+          <div class="p-5">
+            <p class="text-sm leading-relaxed text-black">I care about design that helps, not just design that looks good. For me, creativity is a way of solving real problems, and I am most motivated by projects that can improve comfort, confidence, usability, and quality of life for people who are often overlooked by mainstream design.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- External Control Navigation Ribbon -->
+    <div
+      class="max-w-7xl mx-auto bg-white border-4 border-black p-4 window-shadow flex flex-wrap gap-4 items-center justify-between">
+      <span class="text-xs font-bold font-mono text-black">WORKSPACE NAVIGATION GATEWAYS:</span>
+      <div class="flex flex-wrap gap-3">
+        <button onclick="openModal('experienceModal')"
+          class="px-5 py-2.5 bg-black text-white font-bold uppercase tracking-wider text-xs window-shadow hover:bg-neutral-800 transition-all cursor-pointer">
+          Open Experience Logs 
+        </button>
+        <button onclick="openModal('certificationsModal')"
+          class="px-5 py-2.5 bg-[#D3B0EA] text-black border-2 border-black font-bold uppercase tracking-wider text-xs window-shadow hover:bg-white transition-all cursor-pointer">
+          Certifications & Achievements 
+        </button>
+      </div>
+    </div>
+
+    <!-- Static Skills Blocks Matrix Grid Layout Section -->
+    <section class="max-w-7xl mx-auto space-y-6">
+      <h3
+        class="text-2xl font-bold uppercase tracking-tight font-mono text-center bg-black text-white p-2 window-shadow max-w-xs mx-auto">
+        Capabilities Matrix</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white border-4 border-black p-5 window-shadow rounded-sm space-y-4">
+          <h4 class="text-sm font-bold uppercase tracking-wider text-[#DC326A] font-mono border-b-2 border-black pb-1">
+            Digital Skills</h4>
+          <div class="flex flex-col gap-2">
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#DC326A] hover:text-white transition-colors duration-150">UI/UX</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#D3B0EA] hover:text-black transition-colors duration-150">web
+              design</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#FFCFEE] hover:text-white transition-colors duration-150">game
+              development</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#DC326A] hover:text-white transition-colors duration-150">prototyping</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#D3B0EA] hover:text-black transition-colors duration-150">interactive
+              concepts</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#FFCFEE] hover:text-white transition-colors duration-150">user
+              research</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#DC326A] hover:text-white transition-colors duration-150">accessibility
+              thinking</span>
+          </div>
+        </div>
+        <div class="bg-white border-4 border-black p-5 window-shadow rounded-sm space-y-4">
+          <h4 class="text-sm font-bold uppercase tracking-wider text-[#D3B0EA] font-mono border-b-2 border-black pb-1">
+            Creative Skills</h4>
+          <div class="flex flex-col gap-2">
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#FFCFEE] hover:text-white transition-colors duration-150">Visual
+              storytelling</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#DC326A] hover:text-white transition-colors duration-150">photography</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#D3B0EA] hover:text-black transition-colors duration-150">editorial
+              thinking</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#FFCFEE] hover:text-white transition-colors duration-150">concept
+              building</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#DC326A] hover:text-white transition-colors duration-150">illustration</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#D3B0EA] hover:text-black transition-colors duration-150">mixed-media
+              experimentation</span>
+          </div>
+        </div>
+        <div class="bg-white border-4 border-black p-5 window-shadow rounded-sm space-y-4">
+          <h4 class="text-sm font-bold uppercase tracking-wider text-black font-mono border-b-2 border-black pb-1">Human
+            Skills</h4>
+          <div class="flex flex-col gap-2">
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#DC326A] hover:text-white transition-colors duration-150">Empathy</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#D3B0EA] hover:text-black transition-colors duration-150">communication</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#FFCFEE] hover:text-white transition-colors duration-150">adaptability</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#DC326A] hover:text-white transition-colors duration-150">facilitation</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#D3B0EA] hover:text-black transition-colors duration-150">critical
+              thinking</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-[#FFCFEE] hover:text-white transition-colors duration-150">curiosity</span>
+            <span
+              class="px-3 py-2 bg-[#FFF3FC] border-2 border-black text-xs font-semibold rounded-xs hover:bg-black hover:text-white transition-colors duration-150">user
+              connection needs</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+       6. SEAMLESS BACKGROUND MOSAIC GRIDS 
+       ========================================================================== -->
+    <section id="brain-exploration-grid" class="max-w-7xl mx-auto pt-12 relative scroll-mt-24">
+      <div class="text-center mb-12">
+        <h2
+          class="text-4xl md:text-5xl font-bold uppercase tracking-tight bg-black text-white inline-block px-6 py-3 window-shadow brand-wordmark">
+          Brain Exploration Grid Map
+        </h2>
+      </div>
+
+      <!-- Single background layout (gutters configured via gap-4) -->
+      <div
+        class="w-full max-w-5xl mx-auto border-4 border-black window-shadow-heavy relative bg-gray-950 p-4 bg-cover bg-center rounded-xs"
+        style="background-image: url('images/brain.jpg');">
+        
+        <!-- Transparent cells show the central continuous image cleanly underneath -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 relative z-10 min-h-[480px]">
+
+          <div class="bg-transparent border border-white/10 rounded-sm"></div>
+
+          <!-- Q1 Photo Series -->
+          <a href="photo-series.html"
+            class="border-2 border-green-400 bg-black/85 text-white p-4 flex flex-col justify-between transition-all group relative overflow-hidden rounded-sm">
+            <span
+              class="text-[9px] uppercase tracking-widest font-mono text-green-400 bg-black px-1.5 py-0.5 border border-green-400 w-max">Photography</span>
+            <div
+              class="my-auto text-center font-bold text-xs uppercase tracking-wider group-hover:opacity-0 transition-opacity">
+              Self-Portrait Photography Series</div>
+            <div
+              class="absolute inset-0 p-3 bg-black/95 flex items-center justify-center text-center text-[11px] text-gray-300 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity">
+              A series of staged self-portraits exploring ADHD, chronic illness, and the emotional weight of living with
+              both.
+            </div>
+            <div class="text-[9px] text-gray-500 font-mono text-right truncate">photo-series.html</div>
+          </a>
+
+          <div class="bg-transparent border border-white/10 rounded-sm"></div>
+
+          <!-- Q2 Painting -->
+          <a href="symbolist-painting.html"
+            class="border-2 border-[#DC326A] bg-black/85 text-white p-4 flex flex-col justify-between transition-all group relative overflow-hidden rounded-sm">
+            <span
+              class="text-[9px] uppercase tracking-widest font-mono text-[#DC326A] bg-black px-1.5 py-0.5 border border-[#DC326A] w-max">Painting</span>
+            <div
+              class="my-auto text-center font-bold text-xs uppercase tracking-wider group-hover:opacity-0 transition-opacity">
+              Mixed-Media Self-Portrait Painting</div>
+            <div
+              class="absolute inset-0 p-3 bg-black/95 flex items-center justify-center text-center text-[11px] text-gray-300 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity">
+              A mixed-media self-portrait combining paint, pastels, and medication to reflect identity and chronic
+              treatment tracks.
+            </div>
+            <div class="text-[9px] text-gray-500 font-mono text-right truncate">symbolist-painting.html</div>
+          </a>
+
+          <div class="bg-transparent border border-white/10 rounded-sm"></div>
+
+          <!-- Q3 Gamification Concept -->
+          <a href="digimedia-gamification.html"
+            class="border-2 border-yellow-400 bg-black/85 text-white p-4 flex flex-col justify-between transition-all group relative overflow-hidden rounded-sm">
+            <span
+              class="text-[9px] uppercase tracking-widest font-mono text-yellow-400 bg-black px-1.5 py-0.5 border border-yellow-400 w-max">Gamification
+              Concept</span>
+            <div
+              class="my-auto text-center font-bold text-xs uppercase tracking-wider group-hover:opacity-0 transition-opacity">
+              Milho a Pardais App Concept</div>
+            <div
+              class="absolute inset-0 p-3 bg-black/95 flex items-center justify-center text-center text-[11px] text-gray-300 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity">
+              A gamified UI/UX platform exploring how structured rewarding feedback architectures transform student
+              engagement patterns.
+            </div>
+            <div class="text-[9px] text-gray-500 font-mono text-right truncate">digimedia-gamification.html</div>
+          </a>
+
+          <div class="bg-transparent border border-white/10 rounded-sm"></div>
+
+          <!-- Q4 Magazine -->
+          <a href="adhd-magazine.html"
+            class="border-2 border-[#D3B0EA] bg-black/85 text-white p-4 flex flex-col justify-between transition-all group relative overflow-hidden rounded-sm">
+            <span
+              class="text-[9px] uppercase tracking-widest font-mono text-[#D3B0EA] bg-black px-1.5 py-0.5 border border-[#D3B0EA] w-max">Editorial
+              Design</span>
+            <div
+              class="my-auto text-center font-bold text-xs uppercase tracking-wider group-hover:opacity-0 transition-opacity">
+              Metamorphosis ADHD Magazine</div>
+            <div
+              class="absolute inset-0 p-3 bg-black/95 flex items-center justify-center text-center text-[11px] text-gray-300 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity">
+              A punk-inspired publication rebranding ADHD through accessible science, lived narratives, and high
+              contrast typography.
+            </div>
+            <div class="text-[9px] text-gray-500 font-mono text-right truncate">adhd-magazine.html</div>
+          </a>
+
+          <div class="bg-transparent border border-white/10 rounded-sm"></div>
+
+          <!-- Q5 AR Assistant -->
+          <a href="task-garden-ar.html"
+            class="border-2 border-blue-400 bg-black/85 text-white p-4 flex flex-col justify-between transition-all group relative overflow-hidden rounded-sm">
+            <span
+              class="text-[9px] uppercase tracking-widest font-mono text-blue-400 bg-black px-1.5 py-0.5 border border-blue-400 w-max">Augmented
+              Reality</span>
+            <div
+              class="my-auto text-center font-bold text-xs uppercase tracking-wider group-hover:opacity-0 transition-opacity">
+              Task Garden AR Assistant</div>
+            <div
+              class="absolute inset-0 p-3 bg-black/95 flex items-center justify-center text-center text-[11px] text-gray-300 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity">
+              An AR task-management application translating micro-steps into a growing 3D garden space to mitigate
+              executive fatigue.
+            </div>
+            <div class="text-[9px] text-gray-500 font-mono text-right truncate">task-garden-ar.html</div>
+          </a>
+
+          <div class="bg-transparent border border-white/10 rounded-sm"></div>
+          <div class="bg-transparent border border-white/10 rounded-sm"></div>
+
+          <!-- Q6 VR Game -->
+          <a href="pursuit-of-focus-vr.html"
+            class="border-2 border-purple-400 bg-black/85 text-white p-4 flex flex-col justify-between transition-all group relative overflow-hidden rounded-sm">
+            <span
+              class="text-[9px] uppercase tracking-widest font-mono text-purple-400 bg-black px-1.5 py-0.5 border border-purple-400 w-max">Virtual
+              Reality Game</span>
+            <div
+              class="my-auto text-center font-bold text-xs uppercase tracking-wider group-hover:opacity-0 transition-opacity">
+              In Pursuit of Focus VR Game</div>
+            <div
+              class="absolute inset-0 p-3 bg-black/95 flex items-center justify-center text-center text-[11px] text-gray-300 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity">
+              A first-person VR ADHD simulation rendering working-memory friction, sensory load spikes, and focus-breaks
+              through play.
+            </div>
+            <div class="text-[9px] text-gray-500 font-mono text-right truncate">pursuit-of-focus-vr.html</div>
+          </a>
+
+          <div class="bg-transparent border border-white/10 rounded-sm"></div>
+          <div class="bg-transparent border border-white/10 rounded-sm"></div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modals remain completely functional -->
+  <div id="experienceModal"
+    class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-xs">
+    <div
+      class="w-full max-w-3xl bg-white border-4 border-black window-shadow-heavy rounded-sm max-h-[80vh] flex flex-col">
+      <div class="bg-black text-white p-3 flex justify-between items-center border-b-4 border-black">
+        <span class="font-bold pixel-text text-sm flex items-center gap-2">📂 experience_root_directory.sys</span>
+        <button onclick="closeModal('experienceModal')"
+          class="bg-[#DC326A] text-white font-bold border-2 border-white px-2 text-xs uppercase cursor-pointer">Close</button>
+      </div>
+      <div class="p-6 overflow-y-auto space-y-6 text-xs leading-relaxed text-black">
+        <div class="border-b-2 border-dashed border-black pb-4">
+          <span class="font-bold bg-[#D3B0EA] border border-black px-1.5 py-0.5 font-mono">08/23 & 09/24</span>
+          <h4 class="text-sm font-bold mt-1">Summerschool 2023 (Post-Primary) + Summerschool 2024 (Primary)</h4>
+          <p class="text-gray-700 mt-1">Taught French and English modules to post-primary and primary student
+            classrooms. Used provided lessons as well as created my own lessons and conducted educational activities.
+          </p>
+        </div>
+        <div class="border-b-2 border-dashed border-black pb-4">
+          <span class="font-bold bg-[#D3B0EA] border border-black px-1.5 py-0.5 font-mono">01/23 - 07/23</span>
+          <h4 class="text-sm font-bold mt-1">Individual Tutoring Matrix (Official Program)</h4>
+          <p class="text-gray-700 mt-1">Provided private tutoring in French and Mathematics to several students at my
+            school. Ability to personalize lessons according to each student's specific needs and use different teaching
+            methods to promote understanding and engagement.</p>
+        </div>
+        <div class="border-b-2 border-dashed border-black pb-4">
+          <span class="font-bold bg-[#D3B0EA] border border-black px-1.5 py-0.5 font-mono">10/22</span>
+          <h4 class="text-sm font-bold mt-1">Activate — Face to Face Marketing</h4>
+          <p class="text-gray-700 mt-1">Conducted door-to-door campaigns to convince people to financially support
+            charities such as UNICEF. Acquired marketing and communication skills through training provided by Activate.
+          </p>
+        </div>
+        <div class="border-b-2 border-dashed border-black pb-4">
+          <span class="font-bold bg-[#D3B0EA] border border-black px-1.5 py-0.5 font-mono">2018 - 2020</span>
+          <h4 class="text-sm font-bold mt-1">Socio-Educational Workshop Facilitation — 4motion asbl</h4>
+          <p class="text-gray-700 mt-1">From 2018 until the beginning of the pandemic: Facilitated socio-educational
+            workshops with youth and children in various schools in Luxembourg (4motion asbl).</p>
+        </div>
+        <div class="border-b-2 border-dashed border-black pb-4">
+          <span class="font-bold bg-[#D3B0EA] border border-black px-1.5 py-0.5 font-mono">10/18</span>
+          <h4 class="text-sm font-bold mt-1">Call for Change Workshop</h4>
+          <p class="text-gray-700 mt-1">Participated in a "Call for Change" workshop.</p>
+        </div>
+        <div class="border-b-2 border-dashed border-black pb-4">
+          <span class="font-bold bg-[#D3B0EA] border border-black px-1.5 py-0.5 font-mono">06/18</span>
+          <h4 class="text-sm font-bold mt-1">Stand Urban Art à la KUFA</h4>
+          <p class="text-gray-700 mt-1">Managed an awareness stand (4motion asbl).</p>
+        </div>
+        <div>
+          <span class="font-bold bg-[#D3B0EA] border border-black px-1.5 py-0.5 font-mono">05/18</span>
+          <h4 class="text-sm font-bold mt-1">Formation “Shared Integration” — 4motion asbl</h4>
+          <p class="text-gray-700 mt-1">Trained to conduct workshops with young people in various schools and youth
+            centers. Developed intercultural skills, such as the ability to recognize and overcome different forms of
+            prejudice, discrimination, and stereotypes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="certificationsModal"
+    class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-xs">
+    <div
+      class="w-full max-w-2xl bg-white border-4 border-black window-shadow-heavy rounded-sm max-h-[80vh] flex flex-col">
+      <div class="bg-black text-white p-3 flex justify-between items-center border-b-4 border-black">
+        <span class="font-bold pixel-text text-sm flex items-center gap-2">📂 accolades_archive_payload.sys</span>
+        <button onclick="closeModal('certificationsModal')"
+          class="bg-[#DC326A] text-white font-bold border-2 border-white px-2 text-xs uppercase cursor-pointer">Close</button>
+      </div>
+      <div class="p-6 overflow-y-auto space-y-6 text-xs leading-relaxed text-black">
+        <div class="bg-[#FFF3FC] border-4 border-black p-4 rounded-xs window-shadow">
+          <h4 class="text-sm font-bold text-[#A8003A] uppercase mb-2">First Prize Winner — Multicultural Event Poster
+            Contest (Luxembourg)</h4>
+          <p class="mb-2">As a teenager, I made a hand-drawn poster for a multicultural event in Luxembourg. I almost
+            did not submit it because I did not think it was good enough, especially since I did not have digital tools
+            and the drawing itself felt simple to me at the time. My teacher encouraged me to send it anyway, and I
+            ended up winning first prize. The poster was later displayed across the city, including on buses, and it was
+            especially meaningful to see something I had doubted become part of the public space.</p>
+          <p class="font-bold text-black border-t border-dashed border-black pt-2 mt-2">What stayed with me most
+            was not just the award, but the reminder that trying can matter even when you do not fully believe in your
+            own work yet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      const morphText = document.getElementById('morphText');
-      const brandWordByWord = document.getElementById('brandWordByWord');
-      const w1 = document.getElementById('w1'); const w2 = document.getElementById('w2'); const w3 = document.getElementById('w3');
-      const ribbon = document.getElementById('statusRibbon');
-      const typeTarget = document.getElementById('typeTarget');
-      const waveWrapper = document.getElementById('waveWrapper');
-
-      gsap.to("#introGreeting", { opacity: 1, y: 0, duration: 0.6, delay: 0.2, ease: "power2.out" });
-      gsap.fromTo("#morphText", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.6, delay: 0.2, ease: "back.out(1.7)" });
-
-      setTimeout(() => { morphText.innerText = "Vans"; morphText.style.color = "#D3B0EA"; }, 1400);
-      setTimeout(() => { morphText.innerText = "V"; morphText.style.color = "#000000"; }, 2400);
-
-      setTimeout(() => {
-        morphText.classList.add('hidden');
-        brandWordByWord.classList.remove('hidden');
-        brandWordByWord.classList.add('flex');
-        
-        setTimeout(() => { w1.classList.remove('opacity-0', 'translate-y-4'); w1.classList.add('opacity-100', 'translate-y-0'); }, 150);
-        setTimeout(() => { w2.classList.remove('opacity-0', 'translate-y-4'); w2.classList.add('opacity-100', 'translate-y-0'); }, 350);
-        setTimeout(() => { w3.classList.remove('opacity-0', 'translate-y-4'); w3.className = "brand-wordmark text-[#DC326A]"; }, 550);
-        
-        // Reveal status box and trigger the typewriter typing class execution
-        setTimeout(() => {
-          ribbon.classList.remove('opacity-0');
-          typeTarget.classList.add('start-typing');
-        }, 1100);
-
-        // Show wave dots loop immediately after typing simulation finishes
-        setTimeout(() => {
-          waveWrapper.classList.remove('opacity-0');
-        }, 3600);
-
-      }, 3400);
+      gsap.from("#introGreeting", { opacity: 0, y: -30, duration: 0.8, ease: "power2.out" });
+      gsap.from("#morphText", { opacity: 0, scale: 0.8, duration: 1, ease: "back.out(1.7)" });
     });
 
-    // Particle Animation
+    const morphText = document.getElementById('morphText');
+    const brandWordByWord = document.getElementById('brandWordByWord');
+    const w1 = document.getElementById('w1'); const w2 = document.getElementById('w2'); const w3 = document.getElementById('w3');
+
+    const textPhases = [
+      { label: "Vanessa", tint: "#DC326A", isFinal: false },
+      { label: "Vans", tint: "#D3B0EA", isFinal: false },
+      { label: "V", tint: "#000000", isFinal: false },
+      { label: "Kind by Design", tint: "#DC326A", isFinal: true }
+    ];
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const h = window.innerHeight;
+      let phaseIndex = Math.floor(scrollY / (h * 0.9));
+      if (phaseIndex >= textPhases.length) phaseIndex = textPhases.length - 1;
+      if (phaseIndex < 0) phaseIndex = 0;
+      const activePhase = textPhases[phaseIndex];
+
+      if (activePhase.isFinal) {
+        morphText.classList.add('hidden');
+        brandWordByWord.classList.remove('hidden'); brandWordByWord.classList.add('flex');
+        const progress = scrollY - (h * 0.9 * 3);
+
+        if (progress > 40) w1.classList.remove('opacity-10', 'translate-y-4'); else w1.classList.add('opacity-10', 'translate-y-4');
+        if (progress > 140) w2.classList.remove('opacity-10', 'translate-y-4'); else w2.classList.add('opacity-10', 'translate-y-4');
+        if (progress > 240) w3.classList.remove('opacity-10', 'translate-y-4'); else w3.classList.add('opacity-10', 'translate-y-4');
+      } else {
+        brandWordByWord.classList.add('hidden'); brandWordByWord.classList.remove('flex');
+        morphText.classList.remove('hidden');
+        if (morphText.innerText !== activePhase.label) {
+          morphText.innerText = activePhase.label;
+          morphText.style.color = activePhase.tint;
+        }
+      }
+    });
+
+    function shatter(element) { element.classList.add('shattered'); }
+    function resetPortfolio() { document.querySelectorAll('#destructiblePortfolio span').forEach(s => s.classList.remove('shattered')); }
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+    /* --------------------------------------------------------------------------
+       PIN-AXIS ROTATION WITH GRAVITY ENGINE
+       -------------------------------------------------------------------------- */
+    let isDraggingPolaroid = false;
+    let currentAngle = 0;
+    let angularVelocity = 0;
+    const polaroidEl = document.getElementById('profilePolaroid');
+
+    const gravity = 0.6;
+    const damping = 0.94;
+
+    polaroidEl.addEventListener('mousedown', (e) => {
+      isDraggingPolaroid = true;
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDraggingPolaroid) return;
+      const rect = polaroidEl.getBoundingClientRect();
+      const pinX = rect.left + rect.width / 2;
+      const pinY = rect.top + 16;
+
+      const mouseAngle = Math.atan2(e.clientY - pinY, e.clientX - pinX);
+      currentAngle = (mouseAngle - (Math.PI / 2)) * (180 / Math.PI);
+
+      currentAngle = Math.max(-60, Math.min(60, currentAngle));
+      polaroidEl.style.transform = `rotate(${currentAngle}deg)`;
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDraggingPolaroid = false;
+    });
+
+    function updatePhysics() {
+      if (!isDraggingPolaroid) {
+        const restoringForce = -gravity * Math.sin(currentAngle * Math.PI / 180);
+        angularVelocity += restoringForce;
+        angularVelocity *= damping;
+        currentAngle += angularVelocity;
+
+        if (Math.abs(angularVelocity) < 0.001 && Math.abs(currentAngle) < 0.05) {
+          currentAngle = 0;
+          angularVelocity = 0;
+        }
+        polaroidEl.style.transform = `rotate(${currentAngle}deg)`;
+      }
+      requestAnimationFrame(updatePhysics);
+    }
+    updatePhysics();
+
+    /* --------------------------------------------------------------------------
+       INDEPENDENT RESPONSIVE DRAGGABLE WINDOWS CONSTRAINED ENGINE
+       -------------------------------------------------------------------------- */
+    let activeWindow = null; let startX = 0, startY = 0, initialX = 0, initialY = 0;
+    const container = document.getElementById('windowsWorkspace');
+
+    document.querySelectorAll('.draggable-window').forEach(win => {
+      const hb = win.querySelector('.header-bar');
+      if (!hb) return;
+      hb.addEventListener('mousedown', (e) => {
+        if (e.target.tagName === 'BUTTON') return;
+        e.preventDefault(); activeWindow = win;
+        document.querySelectorAll('.draggable-window').forEach(w => w.style.zIndex = "10");
+        win.style.zIndex = "40";
+        const rect = win.getBoundingClientRect(); const pRect = container.getBoundingClientRect();
+        initialX = rect.left - pRect.left; initialY = rect.top - pRect.top;
+        startX = e.clientX; startY = e.clientY;
+      });
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!activeWindow) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+
+      let targetX = initialX + dx;
+      let targetY = initialY + dy;
+
+      const maxLeft = container.clientWidth - activeWindow.clientWidth;
+      const maxTop = container.clientHeight - activeWindow.clientHeight;
+
+      targetX = Math.max(0, Math.min(maxLeft, targetX));
+      targetY = Math.max(0, Math.min(maxTop, targetY));
+
+      activeWindow.style.left = `${targetX}px`;
+      activeWindow.style.top = `${targetY}px`;
+      activeWindow.style.right = 'auto';
+    });
+    document.addEventListener('mouseup', () => activeWindow = null);
+
+    // Canvas Background loop
     const pixelCanvas = document.getElementById('pixelCanvas');
     const pCtx = pixelCanvas.getContext('2d');
     let pxArray = [];
@@ -180,13 +708,15 @@
     resizePxCanvas();
 
     window.addEventListener('mousemove', (e) => {
-      if (Math.random() > 0.4) {
-        pxArray.push({
-          x: e.clientX, y: e.clientY,
-          size: Math.floor(Math.random() * 4) + 4,
-          color: colorMatrix[Math.floor(Math.random() * colorMatrix.length)],
-          alpha: 1, vy: Math.random() * 2 + 0.6
-        });
+      if (window.scrollY > window.innerHeight * 0.5) {
+        if (Math.random() > 0.4) {
+          pxArray.push({
+            x: e.clientX, y: e.clientY,
+            size: Math.floor(Math.random() * 4) + 4,
+            color: colorMatrix[Math.floor(Math.random() * colorMatrix.length)],
+            alpha: 1, vy: Math.random() * 2 + 0.6
+          });
+        }
       }
     });
 

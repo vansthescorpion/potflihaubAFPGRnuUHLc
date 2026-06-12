@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow"> <title>Self-Portrait Painting — Mixed Media Analysis</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Lexend', sans-serif; background-color: #FFF3FC; color: #291F1E; }
+    .pixel-text { font-family: 'VT323', monospace; }
+    .window-shadow { box-shadow: 4px 4px 0px 0px #291F1E; }
+    
+    .opacity-spot {
+      background-color: rgba(220, 50, 106, 0.09);
+      border: 2px dashed rgba(220, 50, 106, 0.37);
+      cursor: help;
+      transition: all 0.2s ease;
+    }
+    .opacity-spot:hover {
+      background-color: rgba(220, 50, 106, 0.18);
+      border: 2px solid #DC326A;
+    }
+    #cursorTooltip {
+      position: fixed;
+      pointer-events: none;
+      z-index: 200;
+      opacity: 0;
+      transform: translate(15px, 15px);
+      transition: opacity 0.1s ease-out;
+      max-width: 280px;
+    }
+  </style>
+</head>
+<body class="p-4 md:p-8">
+
+  <!-- Floating Mouse Tooltip Frame -->
+  <div id="cursorTooltip" class="bg-[#291F1E] text-white p-3 border-2 border-white window-shadow text-[11px] rounded-xs font-medium space-y-1">
+    <strong id="tooltipTitle" class="text-[#FD9BCF] block uppercase font-mono tracking-wider"></strong>
+    <p id="tooltipDesc" class="text-[#FFF3FC] leading-relaxed"></p>
+  </div>
+
+  <div class="max-w-7xl mx-auto space-y-6">
+    <a href="index.html#brain-exploration-grid" class="inline-block bg-[#291F1E] text-white px-4 py-2 font-bold text-xs uppercase tracking-wider window-shadow hover:bg-neutral-800">← Back to Projects</a>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div class="lg:col-span-6 bg-white border-4 border-[#291F1E] p-4 window-shadow w-full max-w-sm mx-auto">
+        <div class="w-full relative aspect-[2/3] max-h-[66vh] border-2 border-[#291F1E] overflow-hidden bg-gray-900 mx-auto">
+          <img src="images/self portrait.jpg" alt="Self Portrait Painting Viewport" class="w-full h-full object-cover">
+          
+          <div onmousemove="triggerTooltip(event, 'Dopamine molecule')" onmouseleave="hideTooltip()" class="opacity-spot absolute top-[6%] left-[2%] w-[47%] h-[15%]"></div>
+          <div onmousemove="triggerTooltip(event, 'Bubbles')" onmouseleave="hideTooltip()" class="opacity-spot absolute top-[5%] right-[20%] w-[17%] h-[12%]"></div>
+          <div onmousemove="triggerTooltip(event, 'Pills')" onmouseleave="hideTooltip()" class="opacity-spot absolute top-[36%] right-[24%] w-[10%] h-[5%]"></div>
+          <div onmousemove="triggerTooltip(event, 'Pill inside bubble')" onmouseleave="hideTooltip()" class="opacity-spot absolute top-[17%] right-[0%] w-[27%] h-[15%]"></div>
+          <div onmousemove="triggerTooltip(event, 'Braille medication name')" onmouseleave="hideTooltip()" class="opacity-spot absolute top-[32%] right-[0%] w-[9%] h-[65%]"></div>
+          <div onmousemove="triggerTooltip(event, 'Sheep in oil pastel')" onmouseleave="hideTooltip()" class="opacity-spot absolute bottom-[5%] left-[1%] w-[30%] h-[33%]"></div>
+          <div onmousemove="triggerTooltip(event, 'Coffee cup')" onmouseleave="hideTooltip()" class="opacity-spot absolute bottom-[4%] right-[3%] w-[32%] h-[24%]"></div>
+          <div onmousemove="triggerTooltip(event, 'Color explosion')" onmouseleave="hideTooltip()" class="opacity-spot absolute bottom-[30%] right-[10%] w-[35%] h-[20%]"></div>
+          <div onmousemove="triggerTooltip(event, 'Darkness')" onmouseleave="hideTooltip()" class="opacity-spot absolute top-[1%] right-[1%] w-[16%] h-[16%]"></div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-6 space-y-4">
+        <div class="bg-white border-4 border-[#291F1E] p-6 window-shadow space-y-4">
+          <span class="text-xs bg-[#FFCFEE] text-[#A8003A] border border-[#FD9BCF] font-bold px-2 py-0.5 rounded-sm pixel-text">Project File #2 — Mixed-media painting</span>
+          <h1 class="text-3xl font-bold uppercase tracking-tight text-[#A8003A]">Self-Portrait Painting</h1>
+          
+          <div class="text-xs text-[#291F1E] space-y-3 leading-relaxed border-t-2 border-[#291F1E] pt-4">
+            <p>This mixed-media self-portrait brings together different materials and symbols to reflect the tension between creativity, illness, dependence, and emotional distance. The work combines acrylic paint with oil pastels, marker, reflective circles, and glued pills, making the piece feel both intimate and physically layered.</p>
+            <p><strong>Concept:</strong> The painting explores what it feels like to carry both inner intensity and inner heaviness at the same time. It moves between energy and darkness, expression and numbness, showing how creativity, insomnia, medication, and fragility can all coexist in one body and one identity.</p>
+          </div>
+        </div>
+
+        <div class="bg-[#EFE1FC] p-4 border-2 border-[#291F1E] window-shadow text-xs text-[#291F1E] leading-relaxed rounded-xs">
+          <h4 class="font-bold text-black uppercase mb-1 font-mono">Gallery Exhibition Log — Stadthaus</h4>
+          <p>The painting was also shown at Stadthaus, where seeing it in the gallery felt especially meaningful. A little girl looked up at it and said it was pretty, and that small reaction stayed with me because it felt honest, immediate, and unexpectedly affirming.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const directory = {
+      "Color explosion": "The yellow and pink explosion represents creativity and impulsivity bursting outward. It suggests mental intensity, ideas arriving fast, and the force of an internal energy that can feel bright and alive before turning into something heavier.",
+      "Coffee cup": "The cup of coffee, seen from above, is another reference to Camus. It links the act of waking up with the idea of continuing, turning an everyday object into a symbol of survival, ritual, and choice.",
+      "Sheep in oil pastel": "The white parts of multiple sheep refer to “counting sheep” and to insomnia. They bring a quieter but unsettling layer to the work, connecting sleep, repetition, and the frustration of rest that never fully comes.",
+      "Braille medication name": "The reflective circles spell the name of one of my medications in braille. This brings together treatment, identity, and accessibility, while the reflective surface also allows viewers to catch themselves in the work.",
+      "Dopamine molecule": "The dopamine molecule points to ADHD, reward, stimulation, and the chemistry behind motivation and impulse. It works as both a scientific reference and a symbol of a deeper search for balance.",
+      "Bubbles": "Delicate floating orbs that represent fleeting moments of focus and structured mental clarity before chronic sensory overstimulation breaks them apart.",
+      "Pills": "The literal, physical integration of treatment plans directly onto the canvas texture grid, anchoring medical realities to personal identity.",
+      "Pill inside bubble": "The pills trapped inside bubble-like forms represent fragility, dependence, and the precariousness of life when it is tied to medication. They suggest something necessary, but also vulnerable and unstable.",
+      "Darkness": "The shift into black represents darkness. It creates a contrast with the bright colors and reflects the emotional weight that can follow intensity, whether as numbness, exhaustion, or a more difficult mental state."
+    };
+
+    const tooltip = document.getElementById('cursorTooltip');
+    const tTitle = document.getElementById('tooltipTitle');
+    const tDesc = document.getElementById('tooltipDesc');
+
+    function triggerTooltip(e, key) {
+      tTitle.innerText = key;
+      tDesc.innerText = directory[key] || '';
+      tooltip.style.left = `${e.clientX}px`;
+      tooltip.style.top = `${e.clientY}px`;
+      tooltip.style.opacity = "1";
+    }
+    function hideTooltip() { tooltip.style.opacity = "0"; }
+  </script>
+</body>
+</html>
