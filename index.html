@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow"> 
+  <title>Kind by Design - Portfolio</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=VT323&family=Shrikhand&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <style>
+    @font-face {
+      font-family: 'Kindfield';
+      src: url('Kindfield-Regular.otf') format('opentype');
+    }
+
+    body {
+      font-family: 'Lexend', sans-serif;
+      background-color: #FFF3FC; 
+      color: #000000; 
+      overflow: hidden; 
+    }
+
+    .pixel-text {
+      font-family: 'VT323', monospace;
+    }
+
+    .brand-wordmark {
+      font-family: 'Kindfield', 'Shrikhand', sans-serif;
+      font-weight: 400 !important;
+      text-transform: none !important;
+      font-variant-ligatures: normal !important;
+      letter-spacing: 0em;
+      line-height: 1.2 !important;
+    }
+
+    .zine-texture {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    .window-shadow {
+      box-shadow: 4px 4px 0px 0px #000000;
+    }
+
+    /* Typewriter animation effect */
+    .typewriter-text {
+      display: inline-block;
+      overflow: hidden;
+      border-right: 2px solid #000000;
+      white-space: nowrap;
+      width: 0;
+    }
+    
+    .start-typing {
+      animation: typing 2.5s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #000000; }
+    }
+
+    /* Dot Wave Keyframes */
+    .wave-dot {
+      display: inline-block;
+      animation: dotWave 1.2s infinite ease-in-out;
+    }
+    .wave-dot:nth-child(2) { animation-delay: 0.2s; }
+    .wave-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dotWave {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+  </style>
+</head>
+
+<body class="relative min-h-screen text-black selection:bg-[#DC326A] selection:text-white">
+
+  <div class="zine-texture"></div>
+  <canvas id="pixelCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-50"></canvas>
+
+  <header class="fixed inset-0 w-full h-screen bg-[#EFE1FC] z-50 flex flex-col justify-center items-center px-4 overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:30px_30px]"></div>
+    
+    <div class="z-10 text-center uppercase tracking-tight w-full max-w-4xl px-4 flex flex-col items-center justify-center">
+      <h2 id="introGreeting" class="text-3xl md:text-5xl font-bold pixel-text text-black mb-4 tracking-widest opacity-0">Hi, I am</h2>
+      
+      <div class="min-h-[200px] md:min-h-[300px] w-full flex items-center justify-center">
+        <h1 id="morphText"
+          class="text-6xl md:text-9xl font-bold bg-white px-10 py-6 border-4 border-black window-shadow text-[#DC326A] transition-all duration-200">
+          Vanessa
+        </h1>
+        
+        <div id="brandWordByWord"
+          class="hidden flex-row gap-3 md:gap-6 justify-center items-center bg-white px-10 py-6 border-4 border-black window-shadow text-5xl md:text-7xl lg:text-8xl tracking-tight brand-wordmark">
+          <span class="opacity-0 transform translate-y-4 transition-all duration-300 mx-1 text-[#DC326A]" id="w1">Kind</span>
+          <span class="opacity-0 transform translate-y-4 transition-all duration-300 mx-1 text-[#DC326A]" id="w2">by</span>
+          <span class="opacity-0 transform translate-y-4 transition-all duration-300 mx-1 text-[#DC326A]" id="w3">Design</span>
+        </div>
+      </div>
+      
+      <div id="statusRibbon" class="mt-12 bg-white border-2 border-black px-6 py-2.5 window-shadow opacity-0 transition-all duration-500 max-w-md">
+        <p class="text-xs font-bold uppercase tracking-wider text-black font-mono">
+          <span id="typeTarget" class="typewriter-text">The Portfolio will be accessible shortly.</span>
+        </p>
+        
+        <div id="waveWrapper" class="opacity-0 text-xl font-bold text-[#DC326A] mt-2 transition-opacity duration-300">
+          <span class="wave-dot">.</span>
+          <span class="wave-dot">.</span>
+          <span class="wave-dot">.</span>
+        </div>
+        <p class="text-xs italic text-gray-600 mt-1">Thank you for your patience! <3 </p>
+      </div>
+    </div>
+  </header>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const morphText = document.getElementById('morphText');
+      const brandWordByWord = document.getElementById('brandWordByWord');
+      const w1 = document.getElementById('w1'); const w2 = document.getElementById('w2'); const w3 = document.getElementById('w3');
+      const ribbon = document.getElementById('statusRibbon');
+      const typeTarget = document.getElementById('typeTarget');
+      const waveWrapper = document.getElementById('waveWrapper');
+
+      gsap.to("#introGreeting", { opacity: 1, y: 0, duration: 0.6, delay: 0.2, ease: "power2.out" });
+      gsap.fromTo("#morphText", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.6, delay: 0.2, ease: "back.out(1.7)" });
+
+      setTimeout(() => { morphText.innerText = "Vans"; morphText.style.color = "#D3B0EA"; }, 1400);
+      setTimeout(() => { morphText.innerText = "V"; morphText.style.color = "#000000"; }, 2400);
+
+      setTimeout(() => {
+        morphText.classList.add('hidden');
+        brandWordByWord.classList.remove('hidden');
+        brandWordByWord.classList.add('flex');
+        
+        setTimeout(() => { w1.classList.remove('opacity-0', 'translate-y-4'); w1.classList.add('opacity-100', 'translate-y-0'); }, 150);
+        setTimeout(() => { w2.classList.remove('opacity-0', 'translate-y-4'); w2.classList.add('opacity-100', 'translate-y-0'); }, 350);
+        setTimeout(() => { w3.classList.remove('opacity-0', 'translate-y-4'); w3.className = "brand-wordmark text-[#DC326A]"; }, 550);
+        
+        // Reveal status box and trigger the typewriter typing class execution
+        setTimeout(() => {
+          ribbon.classList.remove('opacity-0');
+          typeTarget.classList.add('start-typing');
+        }, 1100);
+
+        // Show wave dots loop immediately after typing simulation finishes
+        setTimeout(() => {
+          waveWrapper.classList.remove('opacity-0');
+        }, 3600);
+
+      }, 3400);
+    });
+
+    // Particle Animation
+    const pixelCanvas = document.getElementById('pixelCanvas');
+    const pCtx = pixelCanvas.getContext('2d');
+    let pxArray = [];
+    const colorMatrix = ['#D3B0EA', '#DC326A', '#FFCFEE', '#000000'];
+
+    function resizePxCanvas() { pixelCanvas.width = window.innerWidth; pixelCanvas.height = window.innerHeight; }
+    window.addEventListener('resize', resizePxCanvas);
+    resizePxCanvas();
+
+    window.addEventListener('mousemove', (e) => {
+      if (Math.random() > 0.4) {
+        pxArray.push({
+          x: e.clientX, y: e.clientY,
+          size: Math.floor(Math.random() * 4) + 4,
+          color: colorMatrix[Math.floor(Math.random() * colorMatrix.length)],
+          alpha: 1, vy: Math.random() * 2 + 0.6
+        });
+      }
+    });
+
+    function loopPixels() {
+      pCtx.clearRect(0, 0, pixelCanvas.width, pixelCanvas.height);
+      pxArray.forEach(p => {
+        p.y += p.vy; p.alpha -= 0.02;
+        pCtx.fillStyle = p.color; pCtx.globalAlpha = p.alpha;
+        pCtx.fillRect(p.x, p.y, p.size, p.size);
+      });
+      pxArray = pxArray.filter(p => p.alpha > 0);
+      pCtx.globalAlpha = 1.0;
+      requestAnimationFrame(loopPixels);
+    }
+    loopPixels();
+  </script>
+</body>
+
+</html>
